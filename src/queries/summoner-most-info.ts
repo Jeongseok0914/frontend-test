@@ -2,13 +2,13 @@ import request from '~helper/request';
 import { useQuery } from 'react-query';
 import { useCallback } from 'react';
 
-const GetSummoner = (url: string) => {
+const GetSummonerMostInfo = (url: string) => {
   return request.get(url);
 };
 
-const useQuerySummoner = (summonerName: string) => {
-  const url = `summoner/${summonerName}`;
-  return useQuery([url], async () => GetSummoner(url), {
+const QuerySummonerMostInfo = (summonerName: string) => {
+  const url = `summoner/${summonerName}/mostInfo`;
+  return useQuery([url], async () => GetSummonerMostInfo(url), {
     enabled: !!summonerName && summonerName !== '',
     select: useCallback((data) => {
       return data;
@@ -16,4 +16,4 @@ const useQuerySummoner = (summonerName: string) => {
   });
 };
 
-export default useQuerySummoner;
+export default QuerySummonerMostInfo;
