@@ -2,16 +2,19 @@ import request from '~helper/request';
 import { useQuery } from 'react-query';
 import { useCallback, useMemo } from 'react';
 
-const GetSummonerMatches = (url: string) => {
+const getSummoner = (url: string) => {
   return request.get(url);
 };
 
-const useQuerySummonerMatches = (summonerName: string) => {
+interface Params {
+  summonerName: string;
+}
+const useQuerySummoner = ({ summonerName }: Params) => {
   const url = useMemo(() => {
-    return `summoner/${summonerName}/matches`;
+    return `summoner/${summonerName}`;
   }, [summonerName]);
 
-  return useQuery([url], async () => GetSummonerMatches(url), {
+  return useQuery([url], async () => getSummoner(url), {
     enabled: !!summonerName && summonerName !== '',
     select: useCallback((data) => {
       return data;
@@ -19,4 +22,5 @@ const useQuerySummonerMatches = (summonerName: string) => {
   });
 };
 
-export default useQuerySummonerMatches;
+export default useQuerySummoner;
+export { getSummoner };
